@@ -1,19 +1,23 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const dotenv = require("dotenv").config();
 
 //mongodb
 mongoose
-  .connect(
-    "mongodb+srv://admin:Finercapt0@cluster0.3htmx.mongodb.net/shop?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => console.log("DBConnection Successfull!"))
   .catch((err) => {
     console.log(err);
   });
 
+app.get('/api/test', (req, res) => {
+    console.log("test is successfull"); 
+    res.send(200);
+})
 
-const PORT = 3001;
+
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`server listen on port ${PORT}`);
+  console.log(`Backend server is running, port:${PORT}`);
 });
