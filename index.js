@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const dotenv = require("dotenv").config();
+const dotenv = require("dotenv").config({path: "./vars/.env"});
+const userRoute = require("./routes/user")
+
+
 
 //mongodb
 mongoose
@@ -10,11 +13,12 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+  
+app.use(express.json());
 
-app.get('/api/test', (req, res) => {
-    console.log("test is successfull"); 
-    res.send(200);
-})
+//Router
+app.use("/api/user", userRoute);
+
 
 
 const PORT = process.env.PORT || 5000;
