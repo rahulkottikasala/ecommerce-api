@@ -2,14 +2,15 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config({path: "./vars/.env"});
-const userRoute = require("./routes/user")
+const userRoute = require("./routes/user");
+const authRoute = require("./routes/auth");
 
 
 
 //mongodb
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("DBConnection Successfull!"))
+  .then(() => console.log("DBConnection Successfull!")) 
   .catch((err) => {
     console.log(err);
   });
@@ -17,7 +18,8 @@ mongoose
 app.use(express.json());
 
 //Router
-app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 
 
 
